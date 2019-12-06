@@ -20,6 +20,10 @@ h3 {
     font-family: "Montserrat", sans-serif;
 }
 
+div {
+    width: 100%;
+}
+
 #scene-container {
     position: fixed;
     width: 100%;
