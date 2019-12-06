@@ -29,7 +29,7 @@ h3 {
 .top-container {
     /* background-color: #00e0ff; */
     position: relative;
-    padding-top: 100px;
+    padding-top: 5%;
 }
 
 .middle-container {
@@ -45,18 +45,18 @@ h3 {
 
 .top-cloud {
     position: absolute;
-    right: 200px;
-    top: 50px;
+    right: 20%;
+    top: 5%;
 }
 
 .bottom-cloud {
     position: absolute;
-    left: 200px;
-    bottom: 100px;
+    left: 20%;
+    bottom: 10%;
 }
 
 .profile-pic {
-    width: 200px;
-    height: 200px;
-    padding-top: 10px;
+    width: 20%;
+    height: 20%;
+    padding-top: 1%;
 }
