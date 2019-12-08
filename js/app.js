@@ -7,11 +7,12 @@ let scene;
 const mixers = [];
 const clock = new THREE.Clock();
 
-function init() {
-    container = document.querySelector("#scene-container");
+function init ()
+{
+    container = document.querySelector( "#scene-container" );
 
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x8fbcd4);
+    scene.background = new THREE.Color( 0x8fbcd4 );
 
     createCamera();
     createControls();
@@ -19,66 +20,73 @@ function init() {
     loadModels();
     createRenderer();
 
-    renderer.setAnimationLoop(() => {
+    renderer.setAnimationLoop( () =>
+    {
         update();
         render();
-    });
+    } );
 }
 
-function createCamera() {
+function createCamera ()
+{
     camera = new THREE.PerspectiveCamera(
         35,
         container.clientWidth / container.clientHeight,
         1,
         1000
     );
-    camera.position.set(0, 0, 100);
+    camera.position.set( 0, 0, 100 );
 }
 
-function createControls() {
-    controls = new THREE.OrbitControls(camera, container);
+function createControls ()
+{
+    controls = new THREE.OrbitControls( camera, container );
 }
 
-function createLights() {
-    const ambientLight = new THREE.HemisphereLight(0xddeeff, 0x0f0e0d, 5);
+function createLights ()
+{
+    const ambientLight = new THREE.HemisphereLight( 0xddeeff, 0x0f0e0d, 5 );
 
-    const mainLight = new THREE.DirectionalLight(0xffffff, 5);
-    mainLight.position.set(10, 10, 10);
+    const mainLight = new THREE.DirectionalLight( 0xffffff, 5 );
+    mainLight.position.set( 10, 10, 10 );
 
-    scene.add(ambientLight, mainLight);
+    scene.add( ambientLight, mainLight );
 }
 
-function loadModels() {
+function loadModels ()
+{
     const loader = new THREE.GLTFLoader();
 
-    const onLoad = (gltf, position) => {
-        const model = gltf.scene.children[0];
-        model.position.copy(position);
+    const onLoad = ( gltf, position ) =>
+    {
+        const model = gltf.scene.children[ 0 ];
+        model.position.copy( position );
 
-        const animation = gltf.animations[0];
+        const animation = gltf.animations[ 0 ];
 
-        const mixer = new THREE.AnimationMixer(model);
-        mixers.push(mixer);
+        const mixer = new THREE.AnimationMixer( model );
+        mixers.push( mixer );
 
-        const action = mixer.clipAction(animation);
+        const action = mixer.clipAction( animation );
         action.play();
 
-        scene.add(model);
+        scene.add( model );
     };
 
-    const onProgress = () => {};
+    const onProgress = () => { };
 
-    const onError = errorMessage => {
-        console.log(errorMessage);
+    const onError = errorMessage =>
+    {
+        console.log( errorMessage );
     };
 
-    const parrotPosition = new THREE.Vector3(0, 0, 0);
-    loader.load(
-        "models/Parrot.glb",
-        gltf => onLoad(gltf, parrotPosition),
-        onProgress,
-        onError
-    );
+    // const parrotPosition = new THREE.Vector3(0, 0, 0);
+    // loader.load(
+    //     "models/Parrot.glb",
+    //     gltf => onLoad(gltf, parrotPosition),
+    //     onProgress,
+    //     onError
+    // );
 
     // const flamingoPosition = new THREE.Vector3(7.5, 0, -10);
     // loader.load(
@@ -97,42 +105,47 @@ function loadModels() {
     // );
 }
 
-function createRenderer() {
+function createRenderer ()
+{
     // create a WebGLRenderer and set its width and height
-    renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer = new THREE.WebGLRenderer( { antialias: true } );
+    renderer.setSize( container.clientWidth, container.clientHeight );
 
-    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setPixelRatio( window.devicePixelRatio );
 
     renderer.gammaFactor = 2.2;
     renderer.gammaOutput = true;
 
     renderer.physicallyCorrectLights = true;
 
-    container.appendChild(renderer.domElement);
+    container.appendChild( renderer.domElement );
 }
 
-function update() {
+function update ()
+{
     const delta = clock.getDelta();
 
-    for (const mixer of mixers) {
-        mixer.update(delta);
+    for ( const mixer of mixers )
+    {
+        mixer.update( delta );
     }
 }
 
-function render() {
-    renderer.render(scene, camera);
+function render ()
+{
+    renderer.render( scene, camera );
 }
 
-function onWindowResize() {
+function onWindowResize ()
+{
     camera.aspect = container.clientWidth / container.clientHeight;
 
     // update the camera's frustum
     camera.updateProjectionMatrix();
 
-    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setSize( container.clientWidth, container.clientHeight );
 }
 
-window.addEventListener("resize", onWindowResize);
+window.addEventListener( "resize", onWindowResize );
 
 init();
